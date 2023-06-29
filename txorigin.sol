@@ -8,6 +8,11 @@ pragma solidity ^0.8.17;
 4. tx.origin is Alice and hence the balance is transferred to Bob
 5. Correct by using msg.sender
 
+tx.origin and msg.sender are both global variables in Solidity that refer to different accounts. 
+The tx.origin global variable refers to the original external account that started the transaction, 
+while msg.sender refers to the immediate account that invokes the function, which could be a contract or external account. 
+The tx.origin variable will always refer to the external account, while msg.sender can be a contract or external account.
+
 */
 
 contract Wallet {
