@@ -25,6 +25,24 @@ contract Wallet {
     }
 }
 
+contract SafeWallet {
+    address public owner;
+
+    constructor() payable {
+        owner = msg.sender;
+    }
+
+    function transfer(address payable _to, uint256 _amount) public {
+      require(msg.sender == owner, "Not owner");
+    
+      (bool sent, ) = _to.call{ value: _amount }("");
+      require(sent, "Failed to send Ether");
+    }
+}
+
+
+
+
 contract Attack {
     address payable public owner; // attacker's address
     Wallet wallet; // instance of the Wallet contract
